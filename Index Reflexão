@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Setembro Amarelo</title>
+  <style>
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      background:#0b0f14;
+      color:#fefce8;
+      display:flex;align-items:center;justify-content:center;
+      height:100vh;text-align:center;
+    }
+    .container{
+      background:#111827;
+      padding:24px;
+      border-radius:12px;
+      max-width:600px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.45);
+    }
+    .brand{
+      font-size:.9rem;
+      opacity:.6;
+      margin-bottom:12px;
+    }
+    .badge{
+      display:inline-block;
+      padding:6px 12px;
+      border-radius:999px;
+      background:rgba(250,204,21,.12);
+      border:1px solid rgba(250,204,21,.35);
+      color:#fef9c3;
+      font-size:.85rem;
+      margin-bottom:14px;
+    }
+    .mensagem{
+      font-size:1.4rem;
+      font-weight:bold;
+      margin:16px 0;
+    }
+    .sub{font-size:.9rem;opacity:.7}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="brand">Arcofoods — alimentos, sorrisos e bebidas</div>
+    <div class="badge">Setembro Amarelo</div>
+    <div id="mensagem" class="mensagem">Carregando...</div>
+    <div class="sub">Você não está sozinho. Falar é um passo de coragem.</div>
+  </div>
+
+  <script>
+    const mensagens = [
+      "A raiva é natural, mas não precisa comandar suas atitudes.",
+      "Reconhecer a raiva é o primeiro passo para transformá-la em algo construtivo.",
+      "O silêncio consciente pode ser mais poderoso que uma explosão de palavras.",
+      "Respirar fundo é escolher paz em vez de tempestade.",
+      "Raiva não é fraqueza, é um sinal de que algo precisa ser cuidado.",
+      "Antes de reagir, lembre-se: nem tudo merece a sua energia.",
+      "A raiva fala alto, mas sua calma pode ser ainda mais forte.",
+      "Transformar a raiva em ação positiva é uma vitória silenciosa.",
+      "Você não controla o que sente, mas pode escolher como responder.",
+      "Raiva acumulada pesa mais em você do que em quem a provoca.",
+      "Uma pausa pode evitar um arrependimento.",
+      "Raiva reprimida adoece; raiva elaborada ensina.",
+      "Sua paz vale mais do que vencer uma discussão.",
+      "A raiva pode ser combustível, mas só se você souber direcionar.",
+      "A mente serena enxerga soluções que a raiva esconde.",
+      "Raiva não precisa ser guerra, pode ser alerta.",
+      "Reconhecer o que te irrita é abrir caminho para mudanças.",
+      "A raiva é um fogo: pode aquecer ou queimar, depende de como você usa.",
+      "Nem toda reação precisa ser imediata.",
+      "Quando a raiva bater, respire: o tempo é seu aliado.",
+      "Se a raiva falar mais alto, sua sabedoria pode escolher o silêncio.",
+      "A raiva mal direcionada afasta; a calma aproxima.",
+      "Você pode sentir raiva sem deixar que ela te defina.",
+      "A raiva é humana, mas a paz é uma escolha.",
+      "Use a raiva como aviso, não como arma.",
+      "A calma não é ausência de raiva, é domínio sobre ela.",
+      "O que te irrita pode ensinar sobre você mesmo.",
+      "A raiva pede reação, mas a reflexão mostra o melhor caminho.",
+      "Guardar rancor alimenta a dor; liberar abre espaço para cura.",
+      "Antes de explodir, lembre-se do poder de uma pausa.",
+      "Você pode transformar a raiva em força para mudar o que incomoda.",
+      "A raiva sem controle é prisão; com consciência, é liberdade.",
+      "Nem toda provocação merece resposta.",
+      "A raiva pode ser forte, mas sua escolha pode ser ainda mais poderosa.",
+      "A serenidade não elimina a raiva, mas impede que ela te domine."
+    ];
+
+    function getOrder() {
+      const saved = localStorage.getItem("ordemMensagens");
+      if (saved) return JSON.parse(saved);
+      return shuffle([...Array(mensagens.length).keys()]);
+    }
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    let ordem = getOrder();
+    let pos = parseInt(localStorage.getItem("posicaoMensagem") || "0", 10);
+    if (pos >= ordem.length) { ordem = shuffle([...Array(mensagens.length).keys()]); pos = 0; }
+
+    document.getElementById("mensagem").innerText = mensagens[ordem[pos]];
+    localStorage.setItem("ordemMensagens", JSON.stringify(ordem));
+    localStorage.setItem("posicaoMensagem", String(pos + 1));
+  </script>
+</body>
+</html>
